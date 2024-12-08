@@ -4,6 +4,7 @@ import goalsImg from "./assets/goals.jpg";
 import CourseGoal from "./components/CourseGoal";
 import Headers from "./components/Headers";
 import CourseGoalList from "./components/CourseGoalList";
+import NewGoal from "./components/NewGoal";
 
 export type CourseGoal = {
   title: string;
@@ -35,7 +36,8 @@ function App() {
       <Headers image={{ src: goalsImg, alt: "A list of goals" }}>
         <h1>Your Course Goals</h1>
       </Headers>
-      <button onClick={handleAddGoal}>Add Goal</button>
+      <NewGoal />
+      {/* <button onClick={handleAddGoal}>Add Goal</button> */}
       {/* <ul>
         {goals.map((goal) => {
           return (
