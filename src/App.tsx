@@ -3,8 +3,9 @@ import "./App.css";
 import goalsImg from "./assets/goals.jpg";
 import CourseGoal from "./components/CourseGoal";
 import Headers from "./components/Headers";
+import CourseGoalList from "./components/CourseGoalList";
 
-type CourseGoal = {
+export type CourseGoal = {
   title: string;
   description: string;
   id: number;
@@ -31,7 +32,7 @@ function App() {
         <h1>Your Course Goals</h1>
       </Headers>
       <button onClick={handleAddGoal}>Add Goal</button>
-      <ul>
+      {/* <ul>
         {goals.map((goal) => {
           return (
             <li key={goal.id}>
@@ -41,7 +42,8 @@ function App() {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+      <CourseGoalList goals={goals}></CourseGoalList>
     </main>
   );
 }
