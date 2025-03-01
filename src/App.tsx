@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import goalsImg from "./assets/goals.jpg";
 import CourseGoal from "./components/CourseGoal";
@@ -13,7 +13,11 @@ export type CourseGoal = {
 };
 
 function App() {
-  const [goals, setGoals] = useState<CourseGoal[]>([]);
+  const [goals, setGoals] = useState<CourseGoal[]>(() => {
+    const localValue = localStorage.getItem("ITEMS");
+    if (localValue === null) return [];
+    return JSON.parse(localValue);
+  });
 
   function handleAddGoal(goal: string, summary: string) {
     const newGoal = {
@@ -27,16 +31,20 @@ function App() {
     });
   }
 
-  function handleDeleteGoal(id: number){
-    setGoals(prevGoals => prevGoals.filter(goal => goal.id != id));
+  function handleDeleteGoal(id: number) {
+    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id != id));
   }
+
+  useEffect(() => {
+    localStorage.setItem("ITEMS", JSON.stringify(goals));
+  });
 
   return (
     <main>
       <Headers image={{ src: goalsImg, alt: "A list of goals" }}>
         <h1>Your Course Goals</h1>
       </Headers>
-      <NewGoal onAddGoal={handleAddGoal}/>
+      <NewGoal onAddGoal={handleAddGoal} />
       {/* <button onClick={handleAddGoal}>Add Goal</button> */}
       {/* <ul>
         {goals.map((goal) => {
@@ -49,7 +57,10 @@ function App() {
           );
         })}
       </ul> */}
-      <CourseGoalList goals={goals} onDeleteGoal={handleDeleteGoal}></CourseGoalList>
+      <CourseGoalList
+        goals={goals}
+        onDeleteGoal={handleDeleteGoal}
+      ></CourseGoalList>
     </main>
   );
 }
